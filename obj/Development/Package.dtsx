@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="97"
-  DTS:VersionGUID="{30D9FF9E-48F3-449E-BC1E-072C541D8CD0}">
+  DTS:VersionBuild="104"
+  DTS:VersionGUID="{54E8CE6B-A1E3-4389-8942-B4E0D6D462E7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -31,8 +31,20 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
       DTS:CreationName="EXCEL"
-      DTS:DTSID="{36C1381A-C1DC-4595-8725-CDE523059AE6}"
+      DTS:DTSID="{F51AB1B0-498C-4035-BE88-EA1D747CE5FA}"
       DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\bestg\Desktop\DH\OLAP\Doan\raw.xlsx;Extended Properties=&quot;EXCEL 12.0 XML;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager 1]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{BC22A4D1-0193-40A4-9DB1-57CCA3FB2DB6}"
+      DTS:ObjectName="Excel Connection Manager 1">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="0"
@@ -3482,7 +3494,7 @@
                     <property
                       dataType="System.String"
                       description="Specifies the name of the database object used to open a rowset."
-                      name="OpenRowset">[time_dim]</property>
+                      name="OpenRowset">[dbo].[time_dim]</property>
                     <property
                       dataType="System.String"
                       description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -3562,7 +3574,7 @@
                         isUsed="True">
                         <externalMetadataColumn
                           refId="Package\Create Dim Table\time_dim\time_dim.Inputs[OLE DB Destination Input].ExternalColumns[last_review]"
-                          dataType="dbDate"
+                          dataType="dbTimeStamp"
                           name="last_review" />
                         <externalMetadataColumn
                           refId="Package\Create Dim Table\time_dim\time_dim.Inputs[OLE DB Destination Input].ExternalColumns[month]"
@@ -3720,7 +3732,7 @@
                     <property
                       dataType="System.String"
                       description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
-                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                      name="FastLoadOptions">TABLOCK</property>
                     <property
                       dataType="System.Int32"
                       description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
@@ -3748,13 +3760,6 @@
                           cachedName="id"
                           externalMetadataColumnId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[id]"
                           lineageId="Package\Create Fact Table\fact\raw_tb.Outputs[OLE DB Source Output].Columns[id]" />
-                        <inputColumn
-                          refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].Columns[name]"
-                          cachedDataType="wstr"
-                          cachedLength="255"
-                          cachedName="name"
-                          externalMetadataColumnId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[name]"
-                          lineageId="Package\Create Fact Table\fact\raw_tb.Outputs[OLE DB Source Output].Columns[name]" />
                         <inputColumn
                           refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].Columns[host_id]"
                           cachedDataType="i4"
@@ -3792,6 +3797,12 @@
                           cachedName="review_id"
                           externalMetadataColumnId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[review_id]"
                           lineageId="Package\Create Fact Table\fact\Lookup review_dim.Outputs[Lookup Match Output].Columns[review_id]" />
+                        <inputColumn
+                          refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].Columns[name_id]"
+                          cachedDataType="i4"
+                          cachedName="name_id"
+                          externalMetadataColumnId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[name_id]"
+                          lineageId="Package\Create Fact Table\fact\Lookup name_dim.Outputs[Lookup Match Output].Columns[name_id]" />
                       </inputColumns>
                       <externalMetadataColumns
                         isUsed="True">
@@ -3799,11 +3810,6 @@
                           refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[id]"
                           dataType="i4"
                           name="id" />
-                        <externalMetadataColumn
-                          refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[name]"
-                          dataType="wstr"
-                          length="255"
-                          name="name" />
                         <externalMetadataColumn
                           refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[host_id]"
                           dataType="i4"
@@ -3829,6 +3835,10 @@
                           refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[review_id]"
                           dataType="i4"
                           name="review_id" />
+                        <externalMetadataColumn
+                          refId="Package\Create Fact Table\fact\fact.Inputs[OLE DB Destination Input].ExternalColumns[name_id]"
+                          dataType="i4"
+                          name="name_id" />
                       </externalMetadataColumns>
                     </input>
                   </inputs>
@@ -4999,8 +5009,8 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
                   <connections>
                     <connection
                       refId="Package\Import Data\Import Data\Excel Source.Connections[OleDbConnection]"
-                      connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
-                      connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                      connectionManagerID="Package.ConnectionManagers[Excel Connection Manager 1]"
+                      connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager 1]"
                       description="The OLE DB runtime connection used to access the database."
                       name="OleDbConnection" />
                   </connections>
@@ -5653,7 +5663,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
               SQLTask:Connection="{7C2E2C46-9C2E-4896-AAC8-CE1C36C0AE21}"
-              SQLTask:SqlStatementSource="delete from raw_tb;&#xA;delete from room_dim;&#xA;delete from status_dim;&#xA;delete from host_dim;&#xA;delete from location_dim;&#xA;delete from neighbourhood_dim;&#xA;delete from review_dim;&#xA;delete from time_dim;&#xA;delete from name_dim;&#xA;delete from fact;&#xA;&#xA;truncate table status_dim;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+              SQLTask:SqlStatementSource="delete from raw_tb;&#xA;delete from room_dim;&#xA;delete from status_dim;&#xA;delete from host_dim;&#xA;delete from location_dim;&#xA;delete from neighbourhood_dim;&#xA;delete from review_dim;&#xA;delete from time_dim;&#xA;delete from name_dim;&#xA;delete from fact;&#xA;&#xA;truncate table raw_tb;&#xA;truncate table room_dim;&#xA;truncate table status_dim;&#xA;truncate table host_dim;&#xA;truncate table location_dim;&#xA;truncate table neighbourhood_dim;&#xA;truncate table review_dim;&#xA;truncate table name_dim;&#xA;truncate table fact;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
           </DTS:ObjectData>
         </DTS:Executable>
       </DTS:Executables>
@@ -5726,7 +5736,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
           Id="Package\Create Dim Table\status_dim"
           TopLeft="155.257144363985,7.43529406134228" />
         <NodeLayout
-          Size="122,42"
+          Size="123,42"
           Id="Package\Create Dim Table\time_dim"
           TopLeft="16.564286769531,190.105882195422" />
         <EdgeLayout
@@ -5753,18 +5763,18 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Create Dim Table.PrecedenceConstraints[Constraint 1]"
-          TopLeft="138.564286769531,208.701470402145">
+          TopLeft="139.564286769531,208.701470402145">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="78.714285707824,0"
+              EndConnector="77.714285707824,0"
               Start="0,0"
-              End="71.214285707824,0">
+              End="70.214285707824,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="71.214285707824,0" />
+                    End="70.214285707824,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5812,21 +5822,27 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
           PanelSize="220,119"
           Size="220,162"
           Id="Package\Reset Old Data"
-          TopLeft="26.1904762462288,112.19607841104" />
+          TopLeft="8.1904762462288,124.19607841104" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="138.876984191649,274.19607841104">
+          TopLeft="118.190476246229,286.19607841104">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,22.8039214066397"
+              EndConnector="-83.62698410916,90.80392140664"
               Start="0,0"
-              End="0,15.3039214066397">
+              End="-76.12698410916,90.80392140664">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,15.3039214066397" />
+                    End="0,86.80392140664" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,86.80392140664"
+                    Point2="0,90.80392140664"
+                    Point3="-4,90.80392140664" />
+                  <mssgle:LineSegment
+                    End="-76.12698410916,90.80392140664" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -6020,7 +6036,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     design-time-name="Package\Create Dim Table\location_dim">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="111,42"
           Id="Package\Create Dim Table\location_dim\raw_tb"
@@ -6048,7 +6064,9 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -6084,7 +6102,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     design-time-name="Package\Create Dim Table\name_dim">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="128,42"
           Id="Package\Create Dim Table\name_dim\name_dim"
@@ -6112,7 +6130,9 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -6270,7 +6290,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     design-time-name="Package\Create Dim Table\review_dim">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="132,42"
           Id="Package\Create Dim Table\review_dim\review_dim"
@@ -6298,7 +6318,9 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -6428,7 +6450,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     design-time-name="Package\Create Dim Table\status_dim">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="130,42"
           Id="Package\Create Dim Table\status_dim\status_dim"
@@ -6456,7 +6478,9 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -6532,9 +6556,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6556,9 +6578,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6580,9 +6600,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -6644,17 +6662,17 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="170,42"
-          Id="Package\Create Fact Table\fact\Lookup review_dim"
-          TopLeft="321.571424379032,146.411761714771" />
-        <NodeLayout
-          Size="167,42"
-          Id="Package\Create Fact Table\fact\Lookup status_dim"
-          TopLeft="63.999996066093,33.999999627471" />
+          Size="166,42"
+          Id="Package\Create Fact Table\fact\Lookup name_dim"
+          TopLeft="324,242" />
         <NodeLayout
           Size="111,42"
           Id="Package\Create Fact Table\fact\raw_tb"
           TopLeft="116.714285775411,166.352941160383" />
+        <NodeLayout
+          Size="170,42"
+          Id="Package\Create Fact Table\fact\Lookup review_dim"
+          TopLeft="321.571424379032,146.411761714771" />
         <NodeLayout
           Size="96,42"
           Id="Package\Create Fact Table\fact\fact"
@@ -6663,40 +6681,10 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
           Size="175,42"
           Id="Package\Create Fact Table\fact\Lookup location_dim"
           TopLeft="317.99999602139,43.999998435378" />
-        <EdgeLayout
-          Id="Package\Create Fact Table\fact.Paths[OLE DB Source Output]"
-          TopLeft="172.214285775411,166.352941160383">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-24.7142897093179,-90.3529415329125"
-              Start="0,0"
-              End="-24.7142897093179,-82.8529415329125">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-41.1764707664562" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-41.1764707664562"
-                    Point2="0,-45.1764707664562"
-                    Point3="-4,-45.1764707664562" />
-                  <mssgle:LineSegment
-                    End="-20.7142897093179,-45.1764707664562" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-20.7142897093179,-45.1764707664562"
-                    Point2="-24.7142897093179,-45.1764707664562"
-                    Point3="-24.7142897093179,-49.1764707664562" />
-                  <mssgle:LineSegment
-                    End="-24.7142897093179,-82.8529415329125" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Create Fact Table\fact\Lookup status_dim"
+          TopLeft="63.999996066093,33.999999627471" />
         <EdgeLayout
           Id="Package\Create Fact Table\fact.Paths[Lookup Match Output1]"
           TopLeft="406.035710200211,85.999998435378">
@@ -6757,31 +6745,39 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="166,42"
-          Id="Package\Create Fact Table\fact\Lookup name_dim"
-          TopLeft="324,242" />
         <EdgeLayout
-          Id="Package\Create Fact Table\fact.Paths[Lookup Match Output2]"
-          TopLeft="406.785712189516,188.411761714771">
+          Id="Package\Create Fact Table\fact.Paths[OLE DB Source Output]"
+          TopLeft="172.214285775411,166.352941160383">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,53.588238285229"
+              EndConnector="-24.7142897093179,-90.3529415329125"
               Start="0,0"
-              End="0,46.088238285229">
+              End="-24.7142897093179,-82.8529415329125">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,46.088238285229" />
+                    End="0,-41.1764707664562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-41.1764707664562"
+                    Point2="0,-45.1764707664562"
+                    Point3="-4,-45.1764707664562" />
+                  <mssgle:LineSegment
+                    End="-20.7142897093179,-45.1764707664562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.7142897093179,-45.1764707664562"
+                    Point2="-24.7142897093179,-45.1764707664562"
+                    Point3="-24.7142897093179,-49.1764707664562" />
+                  <mssgle:LineSegment
+                    End="-24.7142897093179,-82.8529415329125" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,17.2394316426145,96.3827734375,11.609375"
+              BoundingBox="0,0,0,0"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -6809,11 +6805,35 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Create Fact Table\fact.Paths[Lookup Match Output2]"
+          TopLeft="406.785712189516,188.411761714771">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,53.588238285229"
+              Start="0,0"
+              End="0,46.088238285229">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.088238285229" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,17.2394316426145,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Create Fact Table\fact\Lookup review_dim">
+    design-time-name="Package\Create Fact Table\fact\Lookup name_dim">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -6823,7 +6843,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[review_dim]</Value>
+          type="q3:string">[dbo].[name_dim]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -6836,7 +6856,20 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Create Fact Table\fact\Lookup status_dim">
+    design-time-name="Package\Create Fact Table\fact\raw_tb">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Create Fact Table\fact\Lookup review_dim">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
@@ -6846,7 +6879,7 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
       <Property>
         <Name>UsedTableName</Name>
         <Value
-          type="q3:string">[dbo].[status_dim]</Value>
+          type="q3:string">[dbo].[review_dim]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -6872,19 +6905,6 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Create Fact Table\fact\raw_tb">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Create Fact Table\fact\Lookup location_dim">
     <Properties>
       <Property>
@@ -6896,6 +6916,29 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
         <Name>UsedTableName</Name>
         <Value
           type="q3:string">[dbo].[location_dim]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Create Fact Table\fact\Lookup status_dim">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[status_dim]</Value>
       </Property>
       <Property>
         <Name>TableInfoObjectType</Name>
@@ -6980,29 +7023,6 @@ where [refTable].[availability_365] = ? and [refTable].[minimum_nights] = ?</pro
         <Name>TableInfoObjectType</Name>
         <Value
           type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Create Fact Table\fact\Lookup name_dim">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[name_dim]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
